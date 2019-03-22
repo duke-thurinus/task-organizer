@@ -13,7 +13,10 @@ class Task:
         Task.tasks.append(self)
 
     def get_time_till_due(self):
-        return (self.due_date - datetime.datetime.now()).total_seconds()
+        if self.due_date:
+            return (self.due_date - datetime.datetime.now()).total_seconds()
+        else:
+            return None
 
     def change_att(self, attribute, value):
         setattr(self, attribute, value)
