@@ -27,8 +27,10 @@ def get_description():
     return description
 
 
-def get_tags():
-    tags = []
+def get_tags(tags=None):
+    if tags is None:
+        tags = []
+
     while True:
         print("Current tags are: " + ", ".join(tags))
         new_tag = input("Enter a new tag(type existing tag to remove, leave blank to continue: ")
@@ -88,3 +90,44 @@ def get_percent_complete():
             return get_percent_complete()
 
     return percent
+
+
+def update_task():
+    attribute_function_dict = {
+        "name": get_name,
+        "description": get_description,
+        "tags": get_tags,
+        "due_date": get_due_date,
+        "percent_complete": get_percent_complete
+    }
+    current_task = get_task()
+    if current_task is None:
+        return False
+
+    attribute = get_attribute_name(attribute_function_dict)
+    if attribute is None:
+        return False
+
+    current_task.change_att(attribute, attribute_function_dict[attribute]())
+
+
+def get_task():
+    task_name = input("What is the name of the task do you want to modify (blank to cancel): ")
+    if task_name == "":
+        return None
+    for index in range(len(task.Task.tasks)):
+        if task_name == task.Task.tasks[index].name:
+            return task.Task.tasks[index]
+    print("No task matches that name")
+    return get_task()
+
+
+def get_attribute_name(attribute_function_dict):
+    att = input("Enter the attribute you want to change (blank to cancel):")
+    if att == "":
+        return None
+    if att in attribute_function_dict:
+        return att
+    else:
+        print("Attribute does not exist")
+        return get_attribute_name(attribute_function_dict)
