@@ -53,7 +53,7 @@ def get_tags(tags=None):
 
     while True:
         print("Current tags are: " + ", ".join(tags))
-        new_tag = input("Enter a new tag(type existing tag to remove, leave blank to continue: ")
+        new_tag = input("Enter a new tag(type existing tag to remove, leave blank to continue: ").lower().strip()
 
         if new_tag.strip() == "":
             break
