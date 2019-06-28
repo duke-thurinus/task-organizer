@@ -22,13 +22,39 @@ def list_dict(subject_dict):
         print(key)
 
 
+# Primary menu functions
 def new_task():
     return task.Task(get_name(), get_description(), get_tags(), get_due_date(), get_percent_complete())
 
 
+def remove_task():
+    subject_task = get_task()
+    if subject_task is not None:
+        subject_task.delete()
+
+
+def update_task():
+    attribute_function_dict = {
+        "name": get_name,
+        "description": get_description,
+        "tags": get_tags,
+        "due_date": get_due_date,
+        "percent_complete": get_percent_complete
+    }
+    current_task = get_task()
+    if current_task is None:
+        return False
+
+    attribute = get_attribute_name(attribute_function_dict)
+    if attribute is None:
+        return False
+
+    current_task.change_att(attribute, attribute_function_dict[attribute]())
+
+
+# Support functions
 def get_name():
     name = input("Enter a name: ")
-
     if name == "":
         print("Name cannot be left blank")
         return get_name()
@@ -112,25 +138,6 @@ def get_percent_complete():
     return percent
 
 
-def update_task():
-    attribute_function_dict = {
-        "name": get_name,
-        "description": get_description,
-        "tags": get_tags,
-        "due_date": get_due_date,
-        "percent_complete": get_percent_complete
-    }
-    current_task = get_task()
-    if current_task is None:
-        return False
-
-    attribute = get_attribute_name(attribute_function_dict)
-    if attribute is None:
-        return False
-
-    current_task.change_att(attribute, attribute_function_dict[attribute]())
-
-
 def get_task():
     task_name = input("What is the name of the task do you want to modify (blank to cancel): ")
     if task_name == "":
@@ -151,9 +158,3 @@ def get_attribute_name(attribute_function_dict):
     else:
         print("Attribute does not exist")
         return get_attribute_name(attribute_function_dict)
-
-
-def remove_task():
-    subject_task = get_task()
-    if subject_task is not None:
-        subject_task.delete()
