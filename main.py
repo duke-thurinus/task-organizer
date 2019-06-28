@@ -3,7 +3,7 @@ import task
 
 
 def main():
-    pass
+    UI.main_menu()
 
 
 if __name__ == '__main__':

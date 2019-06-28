@@ -2,6 +2,26 @@ import task
 import datetime
 
 
+def main_menu():
+    menu_options = {
+        "new": new_task,
+        "update": update_task,
+        "delete": remove_task
+    }
+    command = ""
+    while command != "quit":
+        print("Your command options are: ")
+        list_dict(menu_options)
+        print("quit")
+        command = input("Enter a command: ").lower().strip()
+        menu_options[command]()
+
+
+def list_dict(subject_dict):
+    for key in subject_dict:
+        print(key)
+
+
 def new_task():
     return task.Task(get_name(), get_description(), get_tags(), get_due_date(), get_percent_complete())
 
@@ -131,3 +151,9 @@ def get_attribute_name(attribute_function_dict):
     else:
         print("Attribute does not exist")
         return get_attribute_name(attribute_function_dict)
+
+
+def remove_task():
+    subject_task = get_task()
+    if subject_task is not None:
+        subject_task.delete()
