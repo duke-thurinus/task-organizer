@@ -5,7 +5,7 @@ import datetime
 def main_menu():
     menu_options = {
         "new": new_task,
-        "show": show_tasks,
+        "list": list_tasks,
         "update": update_task,
         "delete": remove_task
     }
@@ -31,7 +31,7 @@ def new_task():
     return t
 
 
-def show_tasks():
+def list_tasks():
     if not task.Task.tasks:
         print("No tasks")
     else:
