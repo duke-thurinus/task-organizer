@@ -5,6 +5,7 @@ import datetime
 def main_menu():
     menu_options = {
         "new": new_task,
+        "show": show_tasks,
         "update": update_task,
         "delete": remove_task
     }
@@ -27,6 +28,15 @@ def list_dict(subject_dict):
 # Primary menu functions
 def new_task():
     return task.Task(get_name(), get_description(), get_tags(), get_due_date(), get_percent_complete())
+
+
+def show_tasks():
+    if not task.Task.tasks:
+        print("No tasks")
+    else:
+        for t in task.Task.tasks:
+            print(t.name)
+    print("------")
 
 
 def remove_task():
