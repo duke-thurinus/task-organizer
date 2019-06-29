@@ -9,11 +9,13 @@ def main_menu():
         "delete": remove_task
     }
     command = ""
-    while command != "quit":
+    while True:
         print("Your command options are: ")
         list_dict(menu_options)
         print("quit")
         command = input("Enter a command: ").lower().strip()
+        if command == "quit":
+            break
         menu_options[command]()
 
 
