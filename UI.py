@@ -17,17 +17,18 @@ def main_menu():
         command = input("Enter a command: ").lower().strip()
         if command == "quit":
             break
-        menu_options[command]()
-
-
-def list_dict(subject_dict):
-    for key in subject_dict:
-        print(key)
+        if command in menu_options:
+            menu_options[command]()
+        else:
+            print("Command not available")
+            print_spacer()
 
 
 # Primary menu functions
 def new_task():
-    return task.Task(get_name(), get_description(), get_tags(), get_due_date(), get_percent_complete())
+    t = task.Task(get_name(), get_description(), get_tags(), get_due_date(), get_percent_complete())
+    print_spacer()
+    return t
 
 
 def show_tasks():
@@ -36,13 +37,14 @@ def show_tasks():
     else:
         for t in task.Task.tasks:
             print(t.name)
-    print("------")
+    print_spacer()
 
 
 def remove_task():
     subject_task = get_task()
     if subject_task is not None:
         subject_task.delete()
+    print_spacer()
 
 
 def update_task():
@@ -55,16 +57,28 @@ def update_task():
     }
     current_task = get_task()
     if current_task is None:
+        print_spacer()
         return False
 
     attribute = get_attribute_name(attribute_function_dict)
     if attribute is None:
+        print_spacer()
         return False
 
     current_task.change_att(attribute, attribute_function_dict[attribute]())
+    print_spacer()
 
 
 # Support functions
+def list_dict(subject_dict):
+    for key in subject_dict:
+        print(key)
+
+
+def print_spacer():
+    print("---------")
+
+
 def get_name():
     name = input("Enter a name: ")
     if name == "":
